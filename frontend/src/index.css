@@ -1,0 +1,256 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  background-image: url('wes-hicks-Id08N7XZ8XM-unsplash.jpg'); /* Arka plan resmi ekleyin */
+  background-size: cover;
+  background-position: center;
+  color: white;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header styles */
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 0;
+  align-items: center;
+}
+
+.nav-left, .nav-right {
+  display: flex;
+  gap: 15px;
+}
+
+.nav-item {
+  color: #0066ff;
+  text-decoration: none;
+}
+
+.logo img {
+  height: 30px;
+}
+
+/* Hero section */
+.hero-section {
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 50px 0;
+  text-align: center;
+}
+
+.hero-content {
+  width: 100%;
+  max-width: 800px;
+}
+
+.hero-title {
+  font-size: 3rem;
+  margin-bottom: 30px;
+}
+
+.search-form {
+  display: flex;
+  width: 100%;
+}
+
+.search-input {
+  flex: 1;
+  padding: 15px;
+  font-size: 16px;
+  background-color: rgba(51, 51, 51, 0.8); /* Yarı saydam arka plan */
+  color: white;
+  border: none;
+  border-radius: 4px 0 0 4px;
+}
+
+.search-button {
+  background: #0066ff;
+  border: none;
+  color: white;
+  padding: 0 20px;
+  cursor: pointer;
+  border-radius: 0 4px 4px 0;
+}
+
+/* Recommendations section */
+.recommendations-section {
+  display: flex;
+  margin: 50px 0;
+  gap: 20px;
+}
+
+.left-content {
+  flex: 1;
+  padding-right: 40px;
+}
+
+.right-content {
+  flex: 2;
+  display: flex;
+  gap: 20px;
+}
+
+.recommendation-card {
+  background: rgba(42, 42, 42, 0.8); /* Yarı saydam arka plan */
+  border-radius: 8px;
+  height: 200px;
+  overflow: hidden;
+  flex: 1;
+}
+
+.recommendation-badge {
+  padding: 10px;
+  background: #333;
+}
+
+.badge-icon {
+  font-size: 20px;
+  margin-right: 5px;
+}
+
+.badge-subtext {
+  font-size: 12px;
+  color: #ccc;
+}
+
+.sign-in-button {
+  background: #0066ff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+/* Footer styles */
+.footer {
+  margin-top: 50px;
+  padding: 20px 0;
+  text-align: center;
+  border-top: 1px solid #333;
+}
+
+/* Common form styles */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #444;
+  border-radius: 4px;
+  background-color: #333;
+  color: white;
+}
+
+.submit-button {
+  background: #0066ff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+}
+
+/* Payment calculator result */
+.result {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #333;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.monthly-payment {
+  font-size: 24px;
+  font-weight: bold;
+  color: #0066ff;
+}
+
+/* ListingCard styles */
+.listing-card {
+  margin-top: 20px;
+}
+
+.listing-image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.listing-details {
+  padding: 10px;
+}
+
+.listing-price {
+  font-size: 20px;
+  margin: 0 0 5px 0;
+}
+
+.listing-specs {
+  font-size: 14px;
+  color: #ccc;
+  margin-bottom: 5px;
+}
+
+.listing-type {
+  font-size: 12px;
+  color: #999;
+  margin: 0;
+}
+
+/* Forms section */
+.forms-section {
+  margin: 50px 0;
+}
+
+.section-title {
+  margin-bottom: 20px;
+}
+
+.forms-container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.form-wrapper {
+  flex: 1;
+  min-width: 300px;
+  background: rgba(42, 42, 42, 0.8); /* Yarı saydam arka plan */
+  padding: 20px;
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .forms-container {
+    flex-direction: column;
+  }
+  
+  .form-wrapper {
+    width: 100%;
+  }
+}
