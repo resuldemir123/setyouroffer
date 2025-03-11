@@ -2,7 +2,7 @@ const { Sequelize } = require('sequelize');
 const mssql = require('mssql');
 
 // MSSQL bağlantı bilgileri (Windows Authentication)
-const sequelize = new Sequelize('setyouroffer', 'DESKTOP-4MRKT8H', 'resulfe123', {
+const sequelize = new Sequelize('setyouroffer', 're', 'resulfe123', {
   host: 'localhost',
   dialect: 'mssql',
   dialectOptions: {

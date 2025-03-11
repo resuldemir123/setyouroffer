@@ -13,21 +13,10 @@ function ReviewForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // API URL'yi .env dosyasından almak daha iyi
-  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+  // Sabit API URL kullanma
+  const API_URL = "http://localhost:5000";
 
-/*************  ✨ Codeium Command ⭐  *************/
-  /**
-   * Handle form submission by sending a POST request to the reviews API
-   * with the current state of the form.
-   *
-   * If the response is OK, log a success message, otherwise log an error.
-   * If there is a network error, log the error.
-   *
-   * @param {Event} e - form submission event
-   * @returns {Promise<void>}
-   */
-/******  18f0bb0a-3dca-4b02-a1da-c2a4ad671ce8  *******/  const handleChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setReviewData(prev => ({ ...prev, [name]: value }));
   };
