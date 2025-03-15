@@ -9,6 +9,9 @@ function OfferForm() {
     phone: "",
   });
 
+  const [error, setError] = useState(null); // Hata mesajı için state
+  const [isSubmitting, setIsSubmitting] = useState(false); // Yükleniyor durumu için state
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setOfferData((prev) => ({ ...prev, [name]: value }));
@@ -16,6 +19,8 @@ function OfferForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true); // Form gönderiliyor durumunu aktif et
+    setError(null); // Önceki hataları temizle
 
     const offerPayload = {
       propertyAddress: offerData.propertyAddress,
@@ -36,12 +41,14 @@ function OfferForm() {
         body: JSON.stringify(offerPayload),
       });
 
+      // Sunucudan gelen yanıtı kontrol et
       if (!response.ok) {
-        throw new Error("Teklif gönderilemedi.");
+        const errorData = await response.json(); // Hata mesajını parse et
+        throw new Error(errorData.message || "Teklif gönderilirken bir hata oluştu.");
       }
 
       const data = await response.json();
-      console.log("Teklif eklendi:", data);
+      console.log("Teklif başarıyla eklendi:", data);
 
       // Formu sıfırla
       setOfferData({
@@ -51,17 +58,26 @@ function OfferForm() {
         email: "",
         phone: "",
       });
+
+      // Başarı mesajı göster (isteğe bağlı)
+      alert("Teklifiniz başarıyla gönderildi!");
     } catch (error) {
       console.error("Teklif eklenirken hata oluştu:", error);
+      setError(error.message); // Hata mesajını state'e kaydet
+    } finally {
+      setIsSubmitting(false); // Yükleniyor durumunu pasif et
     }
   };
 
   return (
     <form className="offer-form" onSubmit={handleSubmit}>
-      <h3>Make an Offer</h3>
+      <h3>Teklif Yap</h3>
+
+      {/* Hata mesajını göster */}
+      {error && <div className="error-message">{error}</div>}
 
       <div className="form-group">
-        <label htmlFor="propertyAddress">Property Address</label>
+        <label htmlFor="propertyAddress">Mülk Adresi</label>
         <input
           type="text"
           id="propertyAddress"
@@ -73,7 +89,7 @@ function OfferForm() {
       </div>
 
       <div className="form-group">
-        <label htmlFor="offerAmount">Offer Amount</label>
+        <label htmlFor="offerAmount">Teklif Miktarı</label>
         <input
           type="number"
           id="offerAmount"
@@ -85,7 +101,7 @@ function OfferForm() {
       </div>
 
       <div className="form-group">
-        <label htmlFor="name">Your Name</label>
+        <label htmlFor="name">Adınız</label>
         <input
           type="text"
           id="name"
@@ -97,7 +113,7 @@ function OfferForm() {
       </div>
 
       <div className="form-group">
-        <label htmlFor="email">Email</label>
+        <label htmlFor="email">E-posta</label>
         <input
           type="email"
           id="email"
@@ -109,7 +125,7 @@ function OfferForm() {
       </div>
 
       <div className="form-group">
-        <label htmlFor="phone">Phone Number</label>
+        <label htmlFor="phone">Telefon Numarası</label>
         <input
           type="tel"
           id="phone"
@@ -120,8 +136,8 @@ function OfferForm() {
         />
       </div>
 
-      <button type="submit" className="submit-button">
-        Submit Offer
+      <button type="submit" className="submit-button" disabled={isSubmitting}>
+        {isSubmitting ? "Gönderiliyor..." : "Teklifi Gönder"}
       </button>
     </form>
   );

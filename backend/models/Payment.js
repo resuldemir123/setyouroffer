@@ -1,32 +1,10 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db').sql;
+const mongoose = require('mongoose');
 
-const Payment = sequelize.define('Payment', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  },
-  amount: {
-    type: DataTypes.FLOAT,
-    allowNull: false,
-  },
-  status: {
-    type: DataTypes.STRING,
-    defaultValue: 'pending',
-  },
-  userId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-  listingId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-  createdAt: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
-  },
-});
+const PaymentSchema = new mongoose.Schema({
+  amount: { type: Number, required: true },
+  status: { type: String, default: 'pending' },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  listingId: { type: mongoose.Schema.Types.ObjectId, ref: 'Listing', required: true },
+}, { timestamps: true });
 
-module.exports = Payment;
+module.exports = mongoose.model('Payment', PaymentSchema);

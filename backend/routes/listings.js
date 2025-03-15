@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const listingController = require('../controllers/listingController'); // Controller'ı içe aktar
+const listingController = require('../controllers/listingController'); 
 
 // GET - Tüm ilanları getir
 router.get('/', listingController.getAllListings);

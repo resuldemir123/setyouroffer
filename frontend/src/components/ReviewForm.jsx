@@ -26,6 +26,13 @@ function ReviewForm() {
     setLoading(true);
     setError(null);
 
+    // Frontend form validation
+    if (!reviewData.propertyAddress || !reviewData.title || !reviewData.comment || !reviewData.name || !reviewData.email) {
+      setError('Lütfen tüm alanları doldurun.');
+      setLoading(false);
+      return;
+    }
+
     try {
       const response = await fetch(`${API_URL}/api/reviews/add`, {
         method: 'POST',
@@ -34,13 +41,14 @@ function ReviewForm() {
       });
 
       if (!response.ok) {
-        throw new Error('Yorum gönderilirken hata oluştu.');
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Yorum gönderilirken hata oluştu.');
       }
 
       console.log('Yorum başarıyla gönderildi!');
       setReviewData({ propertyAddress: '', rating: 5, title: '', comment: '', name: '', email: '' });
     } catch (err) {
-      setError('Sunucuya bağlanılamadı. Lütfen tekrar deneyin.');
+      setError(`Hata: ${err.message || 'Sunucuya bağlanılamadı. Lütfen tekrar deneyin.'}`);
       console.error('Hata:', err);
     } finally {
       setLoading(false);

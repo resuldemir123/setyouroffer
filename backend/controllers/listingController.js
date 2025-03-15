@@ -1,9 +1,9 @@
-const Listing = require('../models/Listing'); // Listing modelini doğru şekilde içe aktar
+const Listing = require('../models/Listing');
 
 // Tüm ilanları getir
 exports.getAllListings = async (req, res) => {
   try {
-    const listings = await Listing.findAll();
+    const listings = await Listing.find();
     res.json(listings);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -13,7 +13,8 @@ exports.getAllListings = async (req, res) => {
 // Yeni ilan oluştur
 exports.createListing = async (req, res) => {
   try {
-    const listing = await Listing.create(req.body);
+    const listing = new Listing(req.body);
+    await listing.save();
     res.status(201).json(listing);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -23,7 +24,7 @@ exports.createListing = async (req, res) => {
 // Belirli bir ilanı getir
 exports.getListingById = async (req, res) => {
   try {
-    const listing = await Listing.findByPk(req.params.id);
+    const listing = await Listing.findById(req.params.id);
     if (!listing) {
       return res.status(404).json({ message: 'İlan bulunamadı!' });
     }
@@ -36,11 +37,10 @@ exports.getListingById = async (req, res) => {
 // İlanı güncelle
 exports.updateListing = async (req, res) => {
   try {
-    const listing = await Listing.findByPk(req.params.id);
+    const listing = await Listing.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!listing) {
       return res.status(404).json({ message: 'İlan bulunamadı!' });
     }
-    await listing.update(req.body);
     res.json(listing);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -50,11 +50,10 @@ exports.updateListing = async (req, res) => {
 // İlanı sil
 exports.deleteListing = async (req, res) => {
   try {
-    const listing = await Listing.findByPk(req.params.id);
+    const listing = await Listing.findByIdAndDelete(req.params.id);
     if (!listing) {
       return res.status(404).json({ message: 'İlan bulunamadı!' });
     }
-    await listing.destroy();
     res.json({ message: 'İlan başarıyla silindi!' });
   } catch (error) {
     res.status(500).json({ message: error.message });

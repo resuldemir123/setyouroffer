@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom'; // React Router'ı import et
+import { Link, Route, BrowserRouter as Router, Routes } from 'react-router-dom'; // Link importu eklendi
 import './App.css';
 import Footer from './components/Footer';
 import Header from './components/Header';
@@ -7,11 +7,19 @@ import ListingCard from './components/ListingCard';
 import OfferForm from './components/OfferForm';
 import PaymentForm from './components/PaymentForm';
 import ReviewForm from './components/ReviewForm';
+import About from './pages/About';
+import Advertise from './pages/Advertise';
+import Dashboard from './pages/Dashboard';
+import Help from './pages/Help';
+import Home from './pages/Home';
+import Listings from './pages/Listings';
+import ManageRentals from './pages/ManageRentals';
+import Rent from './pages/Rent';
+import Sell from './pages/Sell';
+import SignIn from './pages/SignIn';
 
 function App() {
   const [searchQuery, setSearchQuery] = useState('');
-
-  // Sample listing data
   const sampleListing = {
     price: '$695,000',
     beds: 4,
@@ -24,19 +32,17 @@ function App() {
   const handleSearch = (e) => {
     e.preventDefault();
     console.log('Searching for:', searchQuery);
-    // Implement search functionality
   };
 
   return (
-    <Router>  {/* Router'ı ekle */}
+    <Router>
       <div className="app-container">
+        {/* Header her sayfada gösterilsin */}
         <Header />
-
-        {/* Hero Section */}
+        
         <section className="hero-section">
           <div className="hero-content">
-            <h1 className="hero-title">Agents  Tours  Loans Homes</h1>
-
+            <h1 className="hero-title">Agents Tours Loans Homes</h1>
             <form className="search-form" onSubmit={handleSearch}>
               <input 
                 type="text" 
@@ -45,19 +51,32 @@ function App() {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="search-input"
               />
-              <button type="submit" className="search-button">
-                <span className="search-icon">🔍</span>
-              </button>
+              <button type="submit" className="search-button">🔍</button>
             </form>
           </div>
         </section>
 
-        {/* Recommendations Section */}
+        {/* Yalnızca Ana Sayfa (Home) için diğer içerikler */}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/pages/Listings" element={<Listings />} />
+          <Route path="/pages/Home" element={<Home />} />
+          <Route path="/pages/Dashboard" element={<Dashboard />} />
+          <Route path="/pages/ManageRentals" element={<ManageRentals />} />
+          <Route path="/pages/Advertise" element={<Advertise />} />
+          <Route path="/pages/Help" element={<Help />} />
+          <Route path="/pages/SignIn" element={<SignIn />} />
+          <Route path="/pages/Rent" element={<Rent />} />
+          <Route path="/pages/Sell" element={<Sell />} />
+          <Route path="/pages/About" element={<About />} />
+        </Routes>
+
+        {/* Ana sayfada gösterilecek içerikler */}
         <section className="recommendations-section">
           <div className="left-content">
             <h2>Get home recommendations</h2>
             <p>Sign in for a more personalized experience.</p>
-            <button className="sign-in-button">Sign in</button>
+            <Link to="/pages/SignIn" className="sign-in-button">Sign in</Link>
           </div>
 
           <div className="right-content">
@@ -81,24 +100,23 @@ function App() {
           </div>
         </section>
 
-        {/* Forms Section */}
+        {/* Ana sayfa için formlar ve araçlar */}
         <section className="forms-section">
           <h2 className="section-title">Tools & Resources</h2>
           <div className="forms-container">
             <div className="form-wrapper">
               <OfferForm />
             </div>
-
             <div className="form-wrapper">
               <PaymentForm />
             </div>
-
             <div className="form-wrapper">
               <ReviewForm />
             </div>
           </div>
         </section>
 
+        {/* Footer her sayfada gösterilsin */}
         <Footer />
       </div>
     </Router>

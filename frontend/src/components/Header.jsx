@@ -1,35 +1,28 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Header() {
-  const handleNavigation = (path) => {
-    window.location.href = path;
-  };
-
   return (
     <header className="main-header">
       <nav className="nav-left">
-        {/* Buy - Listings sayfasına git */}
-        <a href="#" onClick={() => handleNavigation("/pages/Listings.jsx")} className="nav-item">Buy</a>
-        <a href="#" className="nav-item">Rent</a>
-        <a href="#" className="nav-item">Sell</a>
-        {/* Home Loans - Home sayfasına git */}
-        <a href="#" onClick={() => handleNavigation("/pages/Home.jsx")} className="nav-item">Home Loans</a>
-        {/* Find an Agent - Dashboard sayfasına git */}
-        <a href="#" onClick={() => handleNavigation("/pages/Dashboard.jsx")} className="nav-item">Find an Agent</a>
+        <Link to="/pages/Listings" className="nav-item">Buy</Link>
+        <Link to="/pages/Rent" className="nav-item">Rent</Link>
+        <Link to="/pages/Sell" className="nav-item">Sell</Link>
+        <Link to="/pages/Home" className="nav-item">Home Loans</Link>
+        <Link to="/pages/Dashboard" className="nav-item">Find an Agent</Link>
       </nav>
-      
+
       <div className="logo">
-        <a href="#" onClick={() => handleNavigation("/")} >
+        <Link to="/" className="nav-item">
           <img src="/images/D.png" alt="Demir Emlak" />
           <span className="logo-text">Demir Emlak</span>
-        </a>
+        </Link>
       </div>
 
       <nav className="nav-right">
-        <a href="#" className="nav-item">Manage Rentals</a>
-        <a href="#" className="nav-item">Advertise</a>
-        <a href="#" className="nav-item">Help</a>
-        <a href="#" onClick={() => handleNavigation("/pages/Login.jsx")} className="nav-item">Sign In</a>
+        <Link to="/pages/ManageRentals" className="nav-item">Manage Rentals</Link>
+        <Link to="/pages/Advertise" className="nav-item">Advertise</Link>
+        <Link to="/pages/Help" className="nav-item">Help</Link>
+        <Link to="/pages/SignIn" className="nav-item">Sign In</Link>
       </nav>
     </header>
   );

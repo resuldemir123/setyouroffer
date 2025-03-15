@@ -1,46 +1,13 @@
-const { DataTypes } = require('sequelize');
-const {sequelize} = require('../config/db'); // Doğrudan sequelize çağrılıyor
+const mongoose = require('mongoose');
 
-const Listing = sequelize.define('Listing', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  },
-  title: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  description: {
-    type: DataTypes.TEXT,
-    allowNull: false,
-  },
-  price: {
-    type: DataTypes.FLOAT,
-    allowNull: false,
-  },
-  location: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  type: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  status: {
-    type: DataTypes.STRING,
-    defaultValue: 'new',
-  },
-  userId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-  createdAt: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
-  },
-}, {
-  timestamps: false, // Eğer `updatedAt` istemiyorsan
-});
+const ListingSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  description: { type: String, required: true },
+  price: { type: Number, required: true },
+  location: { type: String, required: true },
+  type: { type: String, required: true },
+  status: { type: String, default: 'new' },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+}, { timestamps: true });
 
-module.exports = Listing;
+module.exports = mongoose.model('Listing', ListingSchema);

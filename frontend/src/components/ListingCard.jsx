@@ -2,11 +2,15 @@
 import React from 'react';
 
 function ListingCard({ listing }) {
-  if (!listing) return null;
+  if (!listing) {
+    return null;
+  }
   
   return (
     <div className="listing-card">
-      {listing.imageUrl && <img src={listing.imageUrl} alt="Property" className="listing-image" />}
+      {listing.imageUrl && (
+        <img src={listing.imageUrl} alt="Property" className="listing-image" />
+      )}
       <div className="listing-details">
         {listing.price && <h3 className="listing-price">{listing.price}</h3>}
         <div className="listing-specs">
@@ -19,5 +23,4 @@ function ListingCard({ listing }) {
     </div>
   );
 }
-
 export default ListingCard;

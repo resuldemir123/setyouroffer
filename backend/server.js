@@ -1,36 +1,39 @@
 const express = require('express');
+const dotenv = require('dotenv');
 const cors = require('cors');
-const { connectDB } = require('./config/db'); // `{}` içinde çağır
-
+const connectDB = require('./config/db'); // MongoDB bağlantısı
 const authRoutes = require('./routes/auth');
 const listingRoutes = require('./routes/listings');
+const offerRoutes = require('./routes/offers');
+const paymentRoutes = require('./routes/payments');
 const reviewRoutes = require('./routes/reviews');
+
+// .env dosyasını yükle
+dotenv.config();
 
 const app = express();
 
-// Middleware'ler
-app.use(cors());
-app.use(express.json());
+// 📌 Middleware'ler
+app.use(express.json()); // JSON formatını destekle
+app.use(cors()); // CORS politikalarını etkinleştir
 
-// MSSQL'e bağlan
-connectDB(); // ✅ Hata çözülmüş olacak!
+console.log(process.env.MONGO_URI);  // Burada MONGO_URI'yi yazdırıyoruz
 
-// Route'lar
+// 📌 MongoDB'ye bağlan
+connectDB();
+
+// 📌 Route'ları dahil et
 app.use('/api/auth', authRoutes);
 app.use('/api/listings', listingRoutes);
+app.use('/api/offers', offerRoutes);
+app.use('/api/payments', paymentRoutes);
 app.use('/api/reviews', reviewRoutes);
 
-// Tanımsız rotalar için hata yönetimi
-app.use((req, res, next) => {
-  res.status(404).json({ message: 'Route not found' });
+// 📌 Root endpoint
+app.get('/', (req, res) => {
+  res.send('🚀 API çalışıyor!');
 });
 
-// Global hata yönetimi
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ message: 'Something went wrong!' });
-});
-
-// Sunucuyu başlat
-const PORT = 5000;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+// 📌 Sunucuyu Başlat
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`🚀 Server ${PORT} portunda çalışıyor...`));

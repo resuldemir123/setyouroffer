@@ -1,32 +1,20 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db'); // .sql yerine direkt require et
+const mongoose = require('mongoose');
 
-const Offer = sequelize.define('Offer', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  },
-  offerAmount: { // amount yerine offerAmount olabilir (frontend ile eşleşmeli)
-    type: DataTypes.FLOAT,
-    allowNull: false,
-  },
-  status: {
-    type: DataTypes.STRING,
-    defaultValue: 'pending',
+const OfferSchema = new mongoose.Schema({
+  offerAmount: {
+    type: Number,
+    required: true,
   },
   userId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',  // Kullanıcı modeline referans
+    required: true,
   },
   listingId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-  createdAt: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Listing',  // Listing modeline referans
+    required: true,
   },
 });
 
-module.exports = Offer;
+module.exports = mongoose.model('Offer', OfferSchema);

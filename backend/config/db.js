@@ -1,45 +1,26 @@
-const { Sequelize } = require('sequelize');
-const mssql = require('mssql');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 
-// MSSQL bağlantı bilgileri (Windows Authentication)
-const sequelize = new Sequelize('setyouroffer', 're', 'resulfe123', {
-  host: 'localhost',
-  dialect: 'mssql',
-  dialectOptions: {
-    options: {
-      encrypt: false,
-      trustServerCertificate: true,
-    },
-  },
-  logging: false,
-});
+// .env dosyasını yükle
+dotenv.config();
 
-// MSSQL bağlantı ayarları
-const mssqlConfig = {
-  server: 'localhost',
-  database: 'setyouroffer',
-  options: {
-    trustedConnection: true,
-    encrypt: false,
-    trustServerCertificate: true,
-  },
-};
+// Hata ayıklama için MONGO_URI'yi konsola yazdır
+console.log(process.env.MONGO_URI);  // Burada MONGO_URI'yi yazdırıyoruz
 
-// MSSQL'e bağlanma fonksiyonu
 const connectDB = async () => {
   try {
-    await mssql.connect(mssqlConfig);
-    console.log('✅ MSSQL veritabanına başarıyla bağlandı.');
+    // MONGO_URI'yi kontrol et
+    if (!process.env.MONGO_URI) {
+      console.error('MONGO_URI ortam değişkeni tanımlı değil!');
+      return;
+    }
+
+    // MongoDB'ye bağlan
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("MongoDB'ye başarıyla bağlanıldı.");
   } catch (error) {
-    console.error('❌ MSSQL bağlantı hatası:', error);
-    process.exit(1);
+    console.error("MongoDB bağlantı hatası:", error);
   }
 };
 
-// Sequelize bağlantısını test et
-sequelize.authenticate()
-  .then(() => console.log('✅ Sequelize ile MSSQL bağlantısı başarılı.'))
-  .catch(err => console.error('❌ Sequelize bağlantı hatası:', err));
-
-// Export işlemi
-module.exports = { connectDB, sequelize };
+module.exports = connectDB;

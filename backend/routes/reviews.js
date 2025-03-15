@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const reviewController = require('../controllers/reviewController');
+const reviewController = require('../controllers/reviewController'); // Controller'ı doğru bir şekilde import edin
 
-// Yeni inceleme ekleme
-router.post('/add', reviewController.addReview);
+// Yorum ekle
+router.post('/', reviewController.addReview); // Burada addReview fonksiyonunu kullanıyoruz
 
-// Tüm incelemeleri listeleme
-router.get('/', reviewController.getReviews);
+// Yorumları al
+router.get('/', reviewController.getAllReviews);  // Tüm yorumları getirme
+router.get('/:id', reviewController.getReviewById);  // ID'ye göre yorum getirme
 
 module.exports = router;
